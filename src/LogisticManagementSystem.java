@@ -103,6 +103,21 @@ public class LogisticManagementSystem {
     }
 
     public static void renameCity(){
+        System.out.print("Enter the city to be renamed: ");
+        String cityRename = sc.nextLine().toUpperCase();
+        
+        for (int i=0; i<cityCount; i++){
+            if (cities[i].equals(cityRename)){
+                System.out.print("\nEnter the new city name: ");
+            String newCity = sc.nextLine().toUpperCase();
+                cities[i]=newCity;
+                System.out.println("Renamed the city successfully!");
+            }
+            else{
+                System.out.println("City not found!");
+            }
+        }
+            
 
     }
 
