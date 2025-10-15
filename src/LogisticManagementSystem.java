@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class LogisticManagementSystem {
     static Scanner sc = new Scanner (System.in);
     static String cities [] = new String [30];
-    static int cityCount = 0;
+    static int cityCount = 0; //to maintain an easier array
     
     public static void main(String[] args) {
         
@@ -109,7 +109,7 @@ public class LogisticManagementSystem {
         for (int i=0; i<cityCount; i++){
             if (cities[i].equals(cityRename)){
                 System.out.print("\nEnter the new city name: ");
-            String newCity = sc.nextLine().toUpperCase();
+                String newCity = sc.nextLine().toUpperCase();
                 cities[i]=newCity;
                 System.out.println("Renamed the city successfully!");
             }
@@ -122,6 +122,20 @@ public class LogisticManagementSystem {
     }
 
     public static void removeCity(){
+        System.out.print("Name of the city to be removed: ");
+        String removeCity = sc.nextLine().toUpperCase();
+
+        for (int i=0; i<cityCount; i++){
+            if (cities[i].equals(removeCity)){
+                cities[i]= cities[cityCount-1];  //replacing with the last city to avoid null elements in the array
+                cities[cityCount-1]="";
+                cityCount--;
+
+                System.out.println("Removed the city successfully!");
+            } else{
+                System.out.println("City not found!");
+            }
+        }
 
     }
 
