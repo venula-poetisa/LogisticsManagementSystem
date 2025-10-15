@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class LogisticManagementSystem {
     static Scanner sc = new Scanner (System.in);
     static String cities [] = new String [30];
+    static int cityCount = 0;
     
     public static void main(String[] args) {
         
@@ -76,7 +77,38 @@ public class LogisticManagementSystem {
         }while (option!=4);
     }
 
-    
+    public static void addCity(){
+
+        if (cityCount >= cities.length) {
+        System.out.println("City list is full!");   //if the user enters more than 30 cities
+        return;
+        }
+
+        System.out.print("City Name: ");
+        String city = sc.nextLine().toUpperCase();
+
+        //to make sure the city is unique
+        for (int i=0; i<cityCount; i++){
+            if (cities[i].equals(city)){
+                System.out.println("The city is already available");
+                return;
+            }
+        }
+        
+        //storing the city in the array
+        cities[cityCount] = city;
+        cityCount++;
+
+        System.out.println(city + " added successfully!");
+    }
+
+    public static void renameCity(){
+
+    }
+
+    public static void removeCity(){
+
+    }
 
     public static void manageDistances(){
 
