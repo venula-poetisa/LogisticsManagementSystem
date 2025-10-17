@@ -5,9 +5,12 @@ public class LogisticManagementSystem {
     static final int MAX_CITIES = 30;
     static String [] cities = new String [MAX_CITIES];
     static int cityCount = 0; //to maintain an easier array handling
-    
     static int[][] distance = new int[MAX_CITIES][MAX_CITIES];
-    //static int indexOfcity;
+    
+    //(capacity, rate per km, avg speed, fuel efficiency) is implied in the following 3 arrays.
+    static final int [] VAN  = {1000,30,60,12};
+    static final int [] TRUCK = {5000,40,50,6};
+    static final int [] LORRY = {10000,80,45,4};
     
     public static void main(String[] args) {
         
@@ -43,7 +46,7 @@ public class LogisticManagementSystem {
         System.out.println("\n\n===== Logistics Management System =====");
             System.out.println("1. Manage Cities");
             System.out.println("2. Manage Distances");
-            System.out.println("3. Handle Deliveries");
+            System.out.println("3. Request Deliveries");
             System.out.println("4. View Reports");
             System.out.println("5. Exit");
                         
@@ -109,7 +112,7 @@ public class LogisticManagementSystem {
     public static void renameCity(){
         System.out.print("Enter the city to be renamed: ");
         String cityRename = sc.nextLine().toUpperCase();
-        boolean found = false;
+        boolean found = false; 
         
         for (int i=0; i<cityCount; i++){
             if (cities[i].equals(cityRename)){
@@ -164,7 +167,7 @@ public class LogisticManagementSystem {
                 for (int i=0; i<cityCount; i++){
                     System.out.println(i+": "+ cities[i]);
                 }
-                System.out.print("\nEnter starting city index: ");
+                System.out.print("\nEnter source city index: ");
                 int from = sc.nextInt();
 
                 if (from<cityCount){
@@ -211,17 +214,55 @@ public class LogisticManagementSystem {
             System.out.println("Invalid choice. Try again.");
           }
         }
-    }
-
-    public static void vehicleManagement(){
-        final int VAN [] = {1000,30,60,12};
-        final int TRUCK [] = {5000,40,50,6};
-        final int LORRY []= {10000,80,45,4};
-
-    }                                          
+    }                                        
 
     public static void handleDeliveries(){
+        int capacity = 0;
+        System.out.println("\nAvailable cities: ");
+                for (int i=0; i<cityCount; i++){
+                    System.out.println(i+": "+ cities[i]);
+                }
+        System.out.print("Enter the source city index: ");
+        int source = sc.nextInt();
+        if (source<cityCount){
+            System.out.print("Enter the destination city index: ");
+            int dest = sc.nextInt();
+            if (dest<cityCount){
+                if (source==dest){
+                    System.out.println("The source and destination city is the same!");
+                }
+                else{
+                    System.out.println("1 - Van");
+                    System.out.println("2 - Truck");
+                    System.out.println("3 - Lorry");
 
+                    System.out.print("Choose the vehicle type: ");
+                    int type = sc.nextInt();
+
+                    if (type == 1){
+                    capacity=VAN[0];
+                    }else if (type==2){
+                    capacity=TRUCK[0];
+                    }else if (type==3){
+                    capacity=LORRY[0];
+                    }else{
+                    System.out.println("Invalid choice");
+                    }
+
+                    int weight;
+                    do {
+                        System.out.print("\nEnter the weight in kg (should not exceed " + capacity + " kg): ");
+                        weight = sc.nextInt();
+                        if (weight > capacity) {
+                            System.out.println("The weight exceeds the vehicle capacity!");
+                            }
+                            } while (weight > capacity);
+
+                    
+                }
+            }
+        }
+    
     }
 
     public static void viewReports(){
