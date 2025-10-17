@@ -109,6 +109,7 @@ public class LogisticManagementSystem {
     public static void renameCity(){
         System.out.print("Enter the city to be renamed: ");
         String cityRename = sc.nextLine().toUpperCase();
+        boolean found = false;
         
         for (int i=0; i<cityCount; i++){
             if (cities[i].equals(cityRename)){
@@ -116,16 +117,18 @@ public class LogisticManagementSystem {
                 String newCity = sc.nextLine().toUpperCase();
                 cities[i]=newCity;
                 System.out.println("Renamed the city successfully!");
+                found = true;
+                break;
             }
-            else{
-                System.out.println("City not found!");
-            }
+            
         }
+        if (!found) System.out.println("City not found!");
     }
 
     public static void removeCity(){
         System.out.print("Name of the city to be removed: ");
         String removeCity = sc.nextLine().toUpperCase();
+        boolean found = false;
 
         for (int i=0; i<cityCount; i++){
             if (cities[i].equals(removeCity)){
@@ -134,10 +137,11 @@ public class LogisticManagementSystem {
                 cityCount--;
 
                 System.out.println("Removed the city successfully!");
-            } else{
-                System.out.println("City not found!");
+                found = true;
+                break;
             }
         }
+        if (!found) System.out.println("City not found!");
 
     }
 
