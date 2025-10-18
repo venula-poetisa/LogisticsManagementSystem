@@ -11,6 +11,12 @@ public class LogisticManagementSystem {
     static final int [] VAN  = {1000,30,60,12};
     static final int [] TRUCK = {5000,40,50,6};
     static final int [] LORRY = {10000,80,45,4};
+
+    static final int MAX_DELIVERIES = 50;
+    static String[] deliFrom = new String[MAX_DELIVERIES];
+    static String [] deliTo = new String[MAX_DELIVERIES];
+    static double[] deliCost = new double[MAX_DELIVERIES];
+    static int deliCount =0;
     
     public static void main(String[] args) {
         
@@ -185,7 +191,7 @@ public class LogisticManagementSystem {
 
                         distance[from][to]=dist;
                         distance[to][from]=dist;
-                        System.out.println("Distance updated successfully!");
+                        System.out.println("\nDistance updated successfully!");
                         }else{
                             System.out.println("Invalid city index!");
                         }
@@ -310,6 +316,15 @@ public class LogisticManagementSystem {
                 System.out.printf("Estimated Time: %,.2f hours%n", time);
                 System.out.println("======================================================");
 
+        if (deliCount<MAX_DELIVERIES){
+            deliFrom[deliCount] = cities[source];
+            deliTo[deliCount]= cities[dest];
+            deliCost[deliCount]= customerCharge;
+            deliCount++;
+            System.out.println("Delivery record saved successfully!");
+        }else{
+            System.out.println("Delivery record limit reached!");
+        }
                 }
             } else{
                 System.out.println("Invalid index!");
@@ -319,9 +334,6 @@ public class LogisticManagementSystem {
             System.out.println("Invalid index!");
             return;
         }
-
-
-    
     }
 
     public static void viewReports(){
