@@ -171,7 +171,7 @@ public class LogisticManagementSystem {
                 int from = sc.nextInt();
 
                 if (from<cityCount){
-                    System.out.print("\nEnter destination city index: ");
+                    System.out.print("Enter destination city index: ");
                     int to = sc.nextInt();
                         if(to<cityCount){
                             if (from==to){
@@ -224,10 +224,10 @@ public class LogisticManagementSystem {
                 }
         System.out.print("Enter the source city index: ");
         int source = sc.nextInt();
-        if (source<cityCount){
+        if (source<cityCount){ //else part!!
             System.out.print("Enter the destination city index: ");
             int dest = sc.nextInt();
-            if (dest<cityCount){
+            if (dest<cityCount){   //else part!
                 if (source==dest){
                     System.out.println("The source and destination city is the same!");
                 }
@@ -251,17 +251,76 @@ public class LogisticManagementSystem {
 
                     int weight;
                     do {
-                        System.out.print("\nEnter the weight in kg (should not exceed " + capacity + " kg): ");
+                        System.out.print("Enter the weight in kg (should not exceed " + capacity + " kg): ");
                         weight = sc.nextInt();
                         if (weight > capacity) {
-                            System.out.println("The weight exceeds the vehicle capacity!");
+                            System.out.println("The weight exceeds the vehicle capacity! Try again.");
                             }
                             } while (weight > capacity);
 
-                    
+                    //calculations part--------------
+                    int ratePerKm = 0, speed = 0, efficiency = 0;
+                    if (type == 1) {
+                        ratePerKm = VAN[1];
+                        speed = VAN[2];
+                        efficiency = VAN[3];
+                    } else if (type == 2) {
+                        ratePerKm = TRUCK[1];
+                        speed = TRUCK[2];
+                        efficiency = TRUCK[3];
+                        } else if (type == 3) {
+                            ratePerKm = LORRY[1];
+                            speed = LORRY[2];
+                            efficiency = LORRY[3];
+                        }
+                
+                //checking if there is a distance entered
+                int dist = distance[source][dest];
+                if (dist<=0){
+                    System.out.println("Distance between cities not entered!");
+                    return;
                 }
+
+                //double cost = dist * ratePerKm * (1 + (weight / 10000.0));
+                double FUEL_PRICE = 310.0;
+                double baseCost = dist * ratePerKm * (1 + (weight / 10000.0));
+                double time = (double) dist / speed;
+                double fuelUsed = (double) dist / efficiency;
+                double fuelCost = fuelUsed * FUEL_PRICE;
+                double totalOperational = baseCost + fuelCost;
+                double profit = baseCost * 0.25;
+                double customerCharge = totalOperational + profit;
+
+                //printing them;
+                System.out.println("\n======================================================");
+                System.out.println("DELIVERY COST ESTIMATION");
+                System.out.println("------------------------------------------------------");
+                System.out.println("From: " + cities[source]);
+                System.out.println("To: " + cities[dest]);
+                System.out.println("Distance: " + dist + " km");
+                System.out.println("Vehicle: " + (type == 1 ? "Van" : type == 2 ? "Truck" : "Lorry"));
+                System.out.println("Weight: " + weight + " kg");
+                System.out.println("------------------------------------------------------");
+                System.out.printf("Base Cost: %d x %d x (1+ %d/10000) = %,.2f LKR%n",dist,ratePerKm,weight,baseCost);
+                System.out.printf("Fuel Used: %,.2f L%n", fuelUsed);
+                System.out.printf("Fuel Cost: %,.2f LKR%n", fuelCost);
+                System.out.printf("Operational Cost: %,.2f LKR%n", totalOperational);
+                System.out.printf("Profit: %,.2f LKR%n", profit);
+                System.out.printf("Customer Charge: %,.2f LKR%n", customerCharge);
+                System.out.printf("Estimated Time: %,.2f hours%n", time);
+                System.out.println("======================================================");
+
+                }
+            } else{
+                System.out.println("Invalid index!");
+                return;
             }
+        }else {
+            System.out.println("Invalid index!");
+            return;
         }
+
+
     
     }
 
