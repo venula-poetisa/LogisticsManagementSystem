@@ -74,7 +74,7 @@ public class LogisticManagementSystem {
             System.out.println("\n\t1. Add a new city");
             System.out.println("\t2. Rename a city");
             System.out.println("\t3. Remove a city");
-            System.out.println("\t4. Stop City Managing");
+            System.out.println("\t4. Exit City Managing");
 
             System.out.print("\n\tSelect your choice: ");
             option = sc.nextInt();
@@ -126,12 +126,16 @@ public class LogisticManagementSystem {
     }
 
     public static void renameCity(){
-        System.out.print("Enter the city to be renamed: ");
-        String cityRename = sc.nextLine().toUpperCase();
+        System.out.println("\nAvailable cities: ");
+                for (int i=0; i<cityCount; i++){
+                    System.out.println(i+": "+ cities[i]);
+                }
+        System.out.print("Enter index of the city to be renamed: ");
+        int cityRename = sc.nextInt();
         boolean found = false; 
-        
+        sc.nextLine();
         for (int i=0; i<cityCount; i++){
-            if (cities[i].equals(cityRename)){
+            if (i==cityRename){
                 System.out.print("\nEnter the new city name: ");
                 String newCity = sc.nextLine().toUpperCase();
                 cities[i]=newCity;
@@ -145,23 +149,24 @@ public class LogisticManagementSystem {
     }
 
     public static void removeCity(){
-        System.out.print("Name of the city to be removed: ");
-        String removeCity = sc.nextLine().toUpperCase();
-        boolean found = false;
+        System.out.println("\nAvailable cities: ");
+                for (int i=0; i<cityCount; i++){
+                    System.out.println(i+": "+ cities[i]);
+                }
+        System.out.print("Enter index of the city to be removed: ");
+        int removeCity = sc.nextInt();
+        sc.nextLine();
 
-        for (int i=0; i<cityCount; i++){
-            if (cities[i].equals(removeCity)){
-                cities[i]= cities[cityCount-1];  //replacing with the last city to avoid null elements in the array
+        if (removeCity>=0 && removeCity<cityCount){
+                cities[removeCity]= cities[cityCount-1];  //replacing with the last city to avoid null elements in the array
                 cities[cityCount-1]="";
                 cityCount--;
 
                 System.out.println("Removed the city successfully!");
-                found = true;
-                break;
-            }
+        }else{
+            System.out.println("invalid index!");
         }
-        if (!found) System.out.println("City not found!");
-
+            
     }
 
     public static void manageDistances(){
@@ -173,7 +178,7 @@ public class LogisticManagementSystem {
         while (true){
             System.out.println("\n\t1. Add or Edit distance");
             System.out.println("\t2. Display distance table");
-            System.out.println("\t3. Stop distance management");
+            System.out.println("\t3. Exit distance management");
 
             System.out.print("\tEnter your choice: ");
             int choice = sc.nextInt();
