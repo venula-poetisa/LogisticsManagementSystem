@@ -281,7 +281,7 @@ public class LogisticManagementSystem {
                         }
                 
                 //checking if there is a distance entered
-                int dist = distance[source][dest];
+                int dist = leastCostRoute(source, dest);
                 if (dist<=0){
                     System.out.println("Distance between cities not entered!");
                     return;
@@ -303,7 +303,7 @@ public class LogisticManagementSystem {
                 System.out.println("------------------------------------------------------");
                 System.out.println("From: " + cities[source]);
                 System.out.println("To: " + cities[dest]);
-                System.out.println("Distance: " + dist + " km");
+                System.out.println("Minimum Distance: " + dist + " km");
                 System.out.println("Vehicle: " + (type == 1 ? "Van" : type == 2 ? "Truck" : "Lorry"));
                 System.out.println("Weight: " + weight + " kg");
                 System.out.println("------------------------------------------------------");
@@ -325,7 +325,11 @@ public class LogisticManagementSystem {
         }else{
             System.out.println("Delivery record limit reached!");
         }
-                }
+                
+    
+
+
+            }     
             } else{
                 System.out.println("Invalid index!");
                 return;
@@ -341,6 +345,41 @@ public class LogisticManagementSystem {
                 System.out.println(cities[i]);
             }
 
+    }
+
+    public static int leastCostRoute(int source, int dest){
+        if (distance[source][dest]>0){
+            return distance[source][dest];
+        }
+
+        int minDistance = Integer.MAX_VALUE;
+        boolean[]visited = new boolean[cityCount];
+        visited[source]=true;
+
+        minDistance = searchPath(source, dest, visited, 0, minDistance);
+        if (minDistance==Integer.MAX_VALUE){
+            System.out.println("No valid route found!");
+            return -1;
+        }
+        return minDistance;
+    }
+
+    public static int searchPath(int current, int dest, boolean[]visited, int currentDist, int minDist){
+        if (current ==dest){
+            return Math.min(minDist, currentDist);
+        }
+        int visitedCount = 0;
+        for (boolean v :visited) if (v) visitedCount++;
+        if (visitedCount>4) return minDist;
+
+        for(int next =0; next<cityCount; next++){
+            int dist = distance[current][next];
+            if (dist >0 && !visited[next]){
+                visited[next] = true;
+                minDist=searchPath(next, dest, visited, currentDist+dist, minDist);
+                visited[next] = false;
+            }
+        }return minDist;
     }
 
 
