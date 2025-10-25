@@ -24,7 +24,7 @@ public class LogisticManagementSystem {
     static double totalRevenue=0;
     static double totalProfit =0 ;
     static double longestDistance = 0;
-    static double shortestDistance =Double.MAX_VALUE;
+    static double shortestDistance =0;
     static String longestRoute = "";
     static String shortestRoute = "";
     
@@ -319,7 +319,7 @@ public class LogisticManagementSystem {
                     longestDistance = dist;
                     longestRoute = cities[source] + "->"+cities[dest];
                 }
-                if (dist<shortestDistance){
+                if (dist<shortestDistance || dist==shortestDistance){
                     shortestDistance=dist;
                     shortestRoute=cities[source]+"->"+cities[dest];
                 }
