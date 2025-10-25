@@ -18,7 +18,7 @@ public class LogisticManagementSystem {
     static double[] deliCost = new double[MAX_DELIVERIES];
     static int deliCount =0;
     
-    //for the viewReport method
+    //for the viewReport() method
     static double totalDistance = 0;
     static double totalTime = 0;
     static double totalRevenue=0;
@@ -29,7 +29,8 @@ public class LogisticManagementSystem {
     static String shortestRoute = "";
     
     public static void main(String[] args) {
-        
+        cityCount = FileHandling.loadCitiesAndDistances(cities, distance);
+        deliCount = FileHandling.loadDeliveries(deliFrom, deliTo, deliCost);
         int choice;
         do {
             printMenu();
@@ -50,7 +51,9 @@ public class LogisticManagementSystem {
                     viewReports();
                     break;
                 case 5:
-                    System.out.println("Exiting program...");
+                    FileHandling.saveCitiesAndDistances(cities, cityCount, distance);
+                    FileHandling.saveDeliveries(deliFrom, deliTo, deliCost, deliCount);
+                    System.out.println("Exiting program... Data saved successfully!");
                     return;
                 default:
                     System.out.println("Invalid choice. Try again.");
@@ -354,16 +357,13 @@ public class LogisticManagementSystem {
             System.out.println("Delivery record saved successfully!");
         }else{
             System.out.println("Delivery record limit reached!");
-        }
-                
-    
-
-
+        }   
+            
             }     
-            } else{
+                } else{
                 System.out.println("Invalid index!");
                 return;
-            }
+                }
         }else {
             System.out.println("Invalid index!");
             return;
@@ -425,6 +425,7 @@ public class LogisticManagementSystem {
 
     }
 
+    //file handling part
 
 
 }
