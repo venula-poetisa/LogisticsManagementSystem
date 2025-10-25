@@ -18,6 +18,16 @@ public class LogisticManagementSystem {
     static double[] deliCost = new double[MAX_DELIVERIES];
     static int deliCount =0;
     
+    //for the viewReport method
+    static double totalDistance = 0;
+    static double totalTime = 0;
+    static double totalRevenue=0;
+    static double totalProfit =0 ;
+    static double longestDistance = 0;
+    static double shortestDistance =Double.MAX_VALUE;
+    static String longestRoute = "";
+    static String shortestRoute = "";
+    
     public static void main(String[] args) {
         
         int choice;
@@ -297,6 +307,15 @@ public class LogisticManagementSystem {
                 double profit = baseCost * 0.25;
                 double customerCharge = totalOperational + profit;
 
+                if (dist>longestDistance){
+                    longestDistance = dist;
+                    longestRoute = cities[source] + "->"+cities[dest];
+                }
+                if (dist<shortestDistance){
+                    shortestDistance=dist;
+                    shortestRoute=cities[source]+"->"+cities[dest];
+                }
+
                 //printing them;
                 System.out.println("\n======================================================");
                 System.out.println("DELIVERY COST ESTIMATION");
@@ -315,6 +334,12 @@ public class LogisticManagementSystem {
                 System.out.printf("Customer Charge: %,.2f LKR%n", customerCharge);
                 System.out.printf("Estimated Time: %,.2f hours%n", time);
                 System.out.println("======================================================");
+
+                //for the viewReport method
+                totalDistance+=dist;
+                totalTime+=time;
+                totalRevenue+=customerCharge;
+                totalProfit+=profit;
 
         if (deliCount<MAX_DELIVERIES){
             deliFrom[deliCount] = cities[source];
@@ -338,13 +363,6 @@ public class LogisticManagementSystem {
             System.out.println("Invalid index!");
             return;
         }
-    }
-
-    public static void viewReports(){
-        for (int i=0; i<cityCount; i++){
-                System.out.println(cities[i]);
-            }
-
     }
 
     public static int leastCostRoute(int source, int dest){
@@ -380,6 +398,26 @@ public class LogisticManagementSystem {
                 visited[next] = false;
             }
         }return minDist;
+    }
+
+    public static void viewReports(){
+        System.out.println("\n=====Performance Report=====");
+        System.out.println("Total Deliveries Completed: "+deliCount);
+        System.out.printf("Total Distance Covered: %,.2f km%n",totalDistance);
+        if (deliCount>0){
+            System.out.printf("Average Delivery Time: %,.2f hours%n",totalTime/deliCount);
+        }else {System.out.println("Average Delivery Time: 0 hours");} //to avoid dividing by 0
+        System.out.printf("Total Revenue: %,.2f LKR%n",totalRevenue);
+        System.out.printf("Total Profit: %,.2f LKR%n",totalProfit);
+        
+        if (deliCount>0){
+        System.out.println("Longest Route Completed: "+longestRoute+" ("+longestDistance+"km)");
+        System.out.println("Shortest Route Completed: "+shortestRoute+" ("+shortestDistance+"km)");
+        }else {
+            System.out.println("Longest Route Completed: None");
+            System.out.println("Shortest Route Completed: None");
+        }
+
     }
 
 
