@@ -425,7 +425,7 @@ public class LogisticManagementSystem {
 
     }
 
-    //file handling part
+    //file handling part in another class
 
 
 }
